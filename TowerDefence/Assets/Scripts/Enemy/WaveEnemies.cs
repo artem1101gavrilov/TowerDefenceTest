@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveEnemies : MonoBehaviour
@@ -8,7 +7,7 @@ public class WaveEnemies : MonoBehaviour
     List<Vector3> Path = new List<Vector3>();
     int currentWave = 1;
     int x;
-    float timeNewWave = 5;
+    float timeNewWave = 2;
     IEnemy AllEnemyState;
 
     private void Start()
@@ -35,12 +34,15 @@ public class WaveEnemies : MonoBehaviour
     {
         var enemy = Instantiate(Enemy, transform.position, Quaternion.identity, transform).GetComponent<Enemy>();
         enemy.SetPath(Path);
+        enemy.SetEnemyStats(AllEnemyState);
+        enemy.SetWaveController(this);
     }
 
     public void DestroyEnemy()
     {
         //Проверка наличия на карте врагов в волне
-        if(transform.childCount == 0)
+        //1 т.к. последний враг еще не уничтожился
+        if(transform.childCount == 1)
         {
             currentWave++;
             RandomEnemyState();
@@ -68,9 +70,4 @@ struct EnemyStats : IEnemy
     public int Health{ get; set; }
     public int Attack { get; set; }
     public int Gold { get; set; }
-
-    public void SetEnemyStats(IEnemy enemy)
-    {
-        
-    }
 }

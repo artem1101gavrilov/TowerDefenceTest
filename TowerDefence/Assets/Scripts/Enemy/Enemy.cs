@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
-    float speed = 1.0f;
+    float speed = 5.0f;
+    int maxHealth;
     public int Health { get; set; }
     public int Attack { get; set; }
     public int Gold { get; set; }
     List<Vector3> Path;
     Vector3 target;
     SpriteRenderer spriteRenderer;
+    WaveEnemies waveEnemies;
+    Image HPBar;
 
-	void Update ()
+    private void Start()
+    {
+        HPBar = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+    }
+
+    void Update ()
     {
         Move();
     }
@@ -39,7 +46,11 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if(collision.tag.Equals("Player"))
+        {
+            waveEnemies.DestroyEnemy();
+            Destroy(gameObject);
+        }
     }
 
     public void SetPath(List<Vector3> NewPath)
@@ -51,8 +62,24 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void SetEnemyStats(IEnemy enemy)
     {
-        Health = enemy.Health;
+        maxHealth = Health = enemy.Health;
         Attack = enemy.Attack;
         Gold = enemy.Gold;
+    }
+
+    public void SetWaveController(WaveEnemies waveEnemies)
+    {
+        this.waveEnemies = waveEnemies;
+    }
+
+    public void Damage(int damage)
+    {
+        Health -= damage;
+        if(Health <= 0)
+        {
+            waveEnemies.DestroyEnemy();
+            Destroy(gameObject);
+        }
+        HPBar.fillAmount = (float)Health / maxHealth;
     }
 }
