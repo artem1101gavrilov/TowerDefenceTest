@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tower : MonoBehaviour, ITower
 {
+    int LevelReloading;
+    int LevelAttack;
     public float Reloading { get; set; }
     public int Attack { get; set; }
     float timer;
     List<GameObject> Enemies = new List<GameObject>();
     Animator animator;
+
+    public System.Predicate<int> CanBuy;
+    public System.Action<int> BuyStat;
+    public System.Action<int> AddGold;
 
     void Start ()
     {
@@ -16,6 +23,8 @@ public class Tower : MonoBehaviour, ITower
         Attack = 1;
         Reloading = 2;
         timer = 2;
+        LevelReloading = 1;
+        LevelAttack = 1;
     }
 	
 	void Update ()
@@ -37,7 +46,8 @@ public class Tower : MonoBehaviour, ITower
             if(Enemies[0] != null)
             {
                 timer = 0;
-                Enemies[0].GetComponent<Enemy>().Damage(Attack);
+                var g = Enemies[0].GetComponent<Enemy>().Damage(Attack);
+                if (g > 0) AddGold(g);
                 animator.Play("shoot");
                 break;
             }
@@ -61,6 +71,48 @@ public class Tower : MonoBehaviour, ITower
         if (collision.tag.Equals("Enemy"))
         {
             Enemies.Remove(collision.gameObject);
+        }
+    }
+
+    void SetColorButtons()
+    {
+        transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy(LevelAttack) ? 1 : 0.4f, 0.4f, 1);
+        transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy(LevelReloading) ? 1 : 0.4f, 0.4f, 1);
+    }
+
+    private void OnMouseDown()
+    {
+        //Открываем канвас с показанием уровня и стоимостью следующей покупки  
+        transform.GetChild(0).gameObject.SetActive(true);
+        //Красим кнопки покупки в цвет в зависимости от количества имеющихся денег.
+        SetColorButtons();
+    }
+
+    private void OnMouseExit()
+    {
+        //Закрываем канвас
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void BuyAttack()
+    {
+        if(CanBuy(LevelAttack))
+        {
+            BuyStat(LevelAttack);
+            Attack++;
+            LevelAttack++;
+            SetColorButtons();
+        }
+    }
+
+    public void BuyReloading()
+    {
+        if (CanBuy(LevelReloading))
+        {
+            BuyStat(LevelReloading);
+            Reloading -= 0.1f;
+            LevelReloading++;
+            SetColorButtons();
         }
     }
 }

@@ -587,11 +587,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.79
+      value: 3.93
       objectReference: {fileID: 0}
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.61
+      value: -1.52
       objectReference: {fileID: 0}
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -688,6 +688,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1790593106}
+  - component: {fileID: 1790593107}
   m_Layer: 0
   m_Name: Towers
   m_TagString: Untagged
@@ -714,6 +715,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1790593107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1790593105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c711dd8a9f068304caba343a04c99445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1879687975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,8 +1026,9 @@ GameObject:
   - component: {fileID: 2056323803}
   - component: {fileID: 2056323802}
   - component: {fileID: 2056323801}
+  - component: {fileID: 2056323804}
   m_Layer: 0
-  m_Name: house_04_03
+  m_Name: House
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1104,6 +1117,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056323804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2056323800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be33ab28a1b1d974a80eb0d1a70287a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2098476831
 Prefab:
   m_ObjectHideFlags: 0
@@ -1113,11 +1137,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.22
+      value: 6.87
       objectReference: {fileID: 0}
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.71
+      value: -3.21
       objectReference: {fileID: 0}
     - target: {fileID: 4463561712627088, guid: 7aed946b5664405459098c6b3528627a, type: 2}
       propertyPath: m_LocalPosition.z

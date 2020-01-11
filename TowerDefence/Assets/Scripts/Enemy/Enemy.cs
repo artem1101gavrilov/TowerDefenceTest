@@ -48,8 +48,8 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         if(collision.tag.Equals("Player"))
         {
-            waveEnemies.DestroyEnemy();
-            Destroy(gameObject);
+            collision.GetComponent<House>().Damage(Attack);
+            DestroyEnemy();
         }
     }
 
@@ -72,14 +72,23 @@ public class Enemy : MonoBehaviour, IEnemy
         this.waveEnemies = waveEnemies;
     }
 
-    public void Damage(int damage)
+    //Вернем деньги, если убили
+    public int Damage(int damage)
     {
         Health -= damage;
-        if(Health <= 0)
-        {
-            waveEnemies.DestroyEnemy();
-            Destroy(gameObject);
-        }
         HPBar.fillAmount = (float)Health / maxHealth;
+        if (Health <= 0)
+        {
+            DestroyEnemy();
+            return Gold;
+        }
+        return 0;
     }
+
+    void DestroyEnemy()
+    {
+        waveEnemies.DestroyEnemy();
+        Destroy(gameObject);
+    }
+
 }
