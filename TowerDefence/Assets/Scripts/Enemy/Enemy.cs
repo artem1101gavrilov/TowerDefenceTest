@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public int Health { get; set; }
     public int Attack { get; set; }
     public int Gold { get; set; }
+    public bool IsAlive { get; set; }
     List<Vector3> Path;
     Vector3 target;
     SpriteRenderer spriteRenderer;
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour, IEnemy
     private void Start()
     {
         HPBar = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        IsAlive = true;
     }
 
     void Update ()
@@ -87,6 +89,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     void DestroyEnemy()
     {
+        IsAlive = false;
         waveEnemies.DestroyEnemy();
         Destroy(gameObject);
     }

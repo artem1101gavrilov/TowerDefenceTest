@@ -8,11 +8,13 @@ public class GameController : MonoBehaviour
     int Gold = 1;
     int killEnemy = 0;
     int currentWave = 0;
+    bool theEnd = false;
     private UnityAction waveListener;
 
     Text HPText;
     Text GoldText;
     Text WaveText;
+    Text GameOverText;
 
     void Awake()
     {
@@ -34,6 +36,7 @@ public class GameController : MonoBehaviour
         HPText = texts.GetChild(0).GetChild(1).GetComponent<Text>();
         GoldText = texts.GetChild(1).GetChild(1).GetComponent<Text>();
         WaveText = texts.GetChild(2).GetChild(0).GetComponent<Text>();
+        GameOverText = texts.parent.GetChild(1).GetChild(1).GetComponent<Text>();
     }
 
     private void WaveFunction()
@@ -44,12 +47,20 @@ public class GameController : MonoBehaviour
 
     void DestroyedHouse(int damage)
     {
-        ChangeHPText();
         HP -= damage;
-        if(HP <= 0)
+        
+        if (!theEnd && HP <= 0)
         {
-
+            theEnd = true;
+            GameOverText.text = "Wave " + (currentWave - 1).ToString() + "\nKill " + killEnemy.ToString();
+            GameOverText.transform.parent.gameObject.SetActive(true);
+            HP = 0;
         }
+        else if(HP <= 0)
+        {
+            HP = 0;
+        }
+        ChangeHPText();
     }
 
     void OnEnable()

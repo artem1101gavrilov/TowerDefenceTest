@@ -44,7 +44,13 @@ public class WaveEnemies : MonoBehaviour
     {
         //Проверка наличия на карте врагов в волне
         //1 т.к. последний враг еще не уничтожился
-        if(transform.childCount == 1)
+        //TODO : проверка живых, т.к. двоих одновременно могут убить
+        bool isAlive = false;
+        for(int i = 0; i < transform.childCount; ++i)
+        {
+            isAlive |= transform.GetChild(i).GetComponent<Enemy>().IsAlive;
+        }
+        if(!isAlive)
         {
             RandomEnemyState();
             Invoke("NewWave", timeNewWave);
