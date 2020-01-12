@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,8 +75,8 @@ public class Tower : MonoBehaviour, ITower
 
     void SetColorButtons()
     {
-        transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy(LevelAttack) ? 1 : 0.4f, 0.4f, 1);
-        transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy(LevelReloading) ? 1 : 0.4f, 0.4f, 1);
+        transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelAttack)) ? 1 : 0.4f, 0.4f, 1);
+        transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelReloading)) ? 1 : 0.4f, 0.4f, 1);
     }
 
     private void OnMouseDown()
@@ -96,9 +95,9 @@ public class Tower : MonoBehaviour, ITower
 
     public void BuyAttack()
     {
-        if(CanBuy(LevelAttack))
+        if(CanBuy((int)Mathf.Pow(2, LevelAttack)))
         {
-            BuyStat(LevelAttack);
+            BuyStat((int)Mathf.Pow(2, LevelAttack));
             Attack++;
             LevelAttack++;
             SetColorButtons();
@@ -107,9 +106,9 @@ public class Tower : MonoBehaviour, ITower
 
     public void BuyReloading()
     {
-        if (CanBuy(LevelReloading))
+        if (CanBuy((int)Mathf.Pow(2, LevelReloading)))
         {
-            BuyStat(LevelReloading);
+            BuyStat((int)Mathf.Pow(2, LevelReloading));
             Reloading -= 0.1f;
             LevelReloading++;
             SetColorButtons();

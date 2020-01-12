@@ -5,7 +5,7 @@ public class WaveEnemies : MonoBehaviour
 {
     [SerializeField] GameObject Enemy;
     List<Vector3> Path = new List<Vector3>();
-    int currentWave = 1;
+    int currentWave = 0;
     int x;
     float timeNewWave = 2;
     IEnemy AllEnemyState;
@@ -18,11 +18,13 @@ public class WaveEnemies : MonoBehaviour
         {
             Path.Add(PathParent.GetChild(i).position);
         }
-        NewWave();
+        Invoke("NewWave", timeNewWave);
     }
 
     void NewWave()
     {
+        currentWave++;
+        EventManager.TriggerEvent("wave");
         x = Random.Range(1, 10) + currentWave;
         for (int i = 0; i < x; ++i)
         {
@@ -44,7 +46,6 @@ public class WaveEnemies : MonoBehaviour
         //1 т.к. последний враг еще не уничтожился
         if(transform.childCount == 1)
         {
-            currentWave++;
             RandomEnemyState();
             Invoke("NewWave", timeNewWave);
         }
