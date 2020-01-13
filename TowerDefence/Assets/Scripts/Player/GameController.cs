@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     int HP = 20;
-    int Gold = 1;
+    int Gold = 2;
     int killEnemy = 0;
     int currentWave = 0;
     bool theEnd = false;

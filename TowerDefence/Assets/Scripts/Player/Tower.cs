@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Tower : MonoBehaviour, ITower
 {
@@ -15,6 +16,11 @@ public class Tower : MonoBehaviour, ITower
     public System.Predicate<int> CanBuy;
     public System.Action<int> BuyStat;
     public System.Action<int> AddGold;
+	
+	Image ButtonReloading;
+	Image ButtonAttack;
+	TextMeshProUGUI TextReloading;
+	TextMeshProUGUI TextAttack;
 
     void Start ()
     {
@@ -24,6 +30,10 @@ public class Tower : MonoBehaviour, ITower
         timer = 2;
         LevelReloading = 1;
         LevelAttack = 1;
+		ButtonReloading = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>();
+		ButtonAttack = transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
+		TextReloading = ButtonReloading.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+		TextAttack = ButtonAttack.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 	
 	void Update ()
@@ -75,8 +85,10 @@ public class Tower : MonoBehaviour, ITower
 
     void SetColorButtons()
     {
-        transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelAttack)) ? 1 : 0.4f, 0.4f, 1);
-        transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelReloading)) ? 1 : 0.4f, 0.4f, 1);
+        ButtonReloading.color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelReloading)) ? 1 : 0.4f, 0.4f, 1);
+        ButtonAttack.color = new Color(1, CanBuy((int)Mathf.Pow(2, LevelAttack)) ? 1 : 0.4f, 0.4f, 1);
+		TextReloading.text = ((int)Mathf.Pow(2, LevelReloading)).ToString();
+		TextAttack.text = ((int)Mathf.Pow(2, LevelAttack)).ToString();
     }
 
     private void OnMouseDown()
