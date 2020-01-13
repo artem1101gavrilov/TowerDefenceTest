@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour, IEnemy
     void DestroyEnemy()
     {
         IsAlive = false;
-        waveEnemies.DestroyEnemy();
+        waveEnemies.DestroyEnemy(this);
         Destroy(gameObject);
     }
 

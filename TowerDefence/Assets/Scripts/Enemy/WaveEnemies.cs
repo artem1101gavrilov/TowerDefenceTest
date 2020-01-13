@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class WaveEnemies : MonoBehaviour
 {
-    [SerializeField] GameObject Enemy;
+    [SerializeField] GameObject EnemyPrefab;
     List<Vector3> Path = new List<Vector3>();
     int currentWave = 0;
     int x;
     float timeNewWave = 2;
     IEnemy AllEnemyState;
+    List<Enemy> Enemies = new List<Enemy>();
 
     private void Start()
     {
@@ -34,23 +35,18 @@ public class WaveEnemies : MonoBehaviour
 
     void NewEnemy()
     {
-        var enemy = Instantiate(Enemy, transform.position, Quaternion.identity, transform).GetComponent<Enemy>();
+        var enemy = Instantiate(EnemyPrefab, transform.position, Quaternion.identity, transform).GetComponent<Enemy>();
         enemy.SetPath(Path);
         enemy.SetEnemyStats(AllEnemyState);
         enemy.SetWaveController(this);
+        Enemies.Add(enemy);
     }
 
-    public void DestroyEnemy()
+    public void DestroyEnemy(Enemy enemy)
     {
         //Проверка наличия на карте врагов в волне
-        //1 т.к. последний враг еще не уничтожился
-        //TODO : проверка живых, т.к. двоих одновременно могут убить
-        bool isAlive = false;
-        for(int i = 0; i < transform.childCount; ++i)
-        {
-            isAlive |= transform.GetChild(i).GetComponent<Enemy>().IsAlive;
-        }
-        if(!isAlive)
+        Enemies.Remove(enemy);
+        if (Enemies.Count == 0)
         {
             RandomEnemyState();
             Invoke("NewWave", timeNewWave);
